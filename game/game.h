@@ -74,6 +74,7 @@ void startGame() {
 
             for (size_t i = 0; i < strlen(dialog->text); i++) {
                 printf("%c", dialog->text[i]);
+                fflush(stdout); 
                 usleep(20000);
             }
             sleep(1); 
@@ -83,23 +84,38 @@ void startGame() {
             free(dialog->text);
             free(dialog);
 
+            int flag = 0, skip = 0;
             while (1) {
-                printf("Дальше [1]\n");
-                printf("Назад  [0]\n");
+                printf("Следующий уровень [2]\n");
+                printf("Дальше            [1]\n");
+                printf("Назад             [0]\n");
                 printf(" > ");
                 scanf("%i", &choice);
-                if (choice == 1) {
-                    i++;
+                switch (choice) {
+                    case 2:
+                        skip = 1;
+                        break;
+                    case 1:
+                        i++;
+                        flag = 1;
+                        break;
+                    case 0:
+                        if (i > 1) {
+                            i--;
+                            flag = 1;
+                            break;
+                        }
+                    default:
+                        printf("Действие невозможно.\n");
+                }
+                if (flag || skip) {
                     break;
-                } else if (i > 1) {
-                    i--;
-                    break;
-                } else {
-                    printf("Действие невозможно.\n");
                 }
             }
+            if (skip) {
+                break;
+            }
         }
-
         fclose(file);
         counter++;
     }
