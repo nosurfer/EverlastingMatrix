@@ -2,7 +2,7 @@
 
 #ifdef _WIN32
     #include <windows.h>
-#elif __linux__
+#elif defined __unix__
     #include <unistd.h>
 #endif
 
@@ -39,7 +39,7 @@ void clearScreen() {
         FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwSize, coordScreen, &dwCharsWritten);
 
         SetConsoleCursorPosition(hConsole, coordScreen);
-    #elif __linux__ || __APPLE__
+    #elif defined __unix__
         printf("\033[H\033[J");
     #endif
 }

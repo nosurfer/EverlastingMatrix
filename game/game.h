@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "../functions/additionalFunctions.h"
+#include "../functions/functions.h"
 
 typedef struct {
     char *author;
